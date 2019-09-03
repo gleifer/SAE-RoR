@@ -1,5 +1,5 @@
 # SAE-RoR
-Simulated Automotive Environment for the Rules of the Road - (SAE-RoR)
+Simulated Automotive Environment for the Rules Of the Road - (SAE-RoR)
 
 ## Goal:
 
@@ -9,7 +9,7 @@ Simulated Automotive Environment for the Rules of the Road - (SAE-RoR)
 
 ## Brief description:
 
-> SAE-RoR is an extension of Simulated Automotive Environment (SAE). SAE is the first version of an simulation environment for an intelligent agent written in Gwendolen agent programming language. Our agent models the behaviour of an Autonomous Vehicle. Moreover, we verify some formal properties related to the AV-agent by using Model Checking techniques (MCAPL).
+> SAE-RoR is an extension of Simulated Automotive Environment (SAE). SAE is the first version of a simulation environment for an intelligent agent written in Gwendolen agent programming language. Our agent models the behaviour of an Autonomous Vehicle. Moreover, we verify some formal properties related to the AV-agent by using Model Checking techniques (MCAPL).
 
 > Now, SAE-RoR is designed to determine a formal representation for the Road Junction rules from the UK Highway Code. This formal representation is obtained using Linear Temporal Logic (LTL).
 
