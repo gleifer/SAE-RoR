@@ -3,17 +3,17 @@ Simulated Automotive Environment for the Rules of the Road - (SAE-RoR)
 
 ## Goal:
 
-> Investigate the design, formalisation, implementation and verification of the Road Junction rules into an intelligent agent, which indeed represents the high-level decisions of an Autonomous Vehicle.
+> Design, formalise, implement and verify the Road Junction rules into an intelligent agent, which indeed represents the behaviour of an Autonomous Vehicle.
 
 > We aim to obtain answers towards the adaption of the Road Junction rules into an Autonomous Vehicles.
 
 ## Brief description:
 
-> SAE-RoR is an extension of Simulated Automotive Environment (SAE). SAE is the first version of a simulator for an intelligent agent written in Gwendolen agent programming language. Our agent models the behaviour of an Autonomous Vehicle. Yet we verify some formal properties related to our AV-agent via Model Checking.
+> SAE-RoR is an extension of Simulated Automotive Environment (SAE). SAE is the first version of an simulation environment for an intelligent agent written in Gwendolen agent programming language. Our agent models the behaviour of an Autonomous Vehicle. Moreover, we verify some formal properties related to the AV-agent by using Model Checking techniques (MCAPL).
 
-> Now, SAE-RoR is designed to determine a formal representation of the Road Junction rules from the UK Highway Code. This formal representation is established using LTL.
+> Now, SAE-RoR is designed to determine a formal representation for the Road Junction rules from the UK Highway Code. This formal representation is obtained using Linear Temporal Logic (LTL).
 
-> Besides, our ongoing work will present the following:
+> Our ongoing work will present the following:
 
 >> The Road Junction rules embedded into a Gwendolen agent.
 
@@ -24,10 +24,9 @@ Simulated Automotive Environment for the Rules of the Road - (SAE-RoR)
 
 > SAE-RoR is part of a research project, which is a collaboration between Federal University of Technology - Parana (UTFPR) and University of Liverpool.
 
-## Team:
+## Researchers:
 
-> Gleifer Vaz Alves 
->> [gleifer@utfpr.edu.br]
+> Gleifer Vaz Alves gleifer@utfpr.edu.br
 
 > Louise Dennis L.A.Dennis@liverpool.ac.uk
 
