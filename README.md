@@ -32,4 +32,8 @@ Simulated Automotive Environment for the Rules Of the Road - (SAE-RoR)
 
 > Michael Fisher MFisher@liverpool.ac.uk
 
+## Students:
+
+> Vithor Tozetto vithorferreira@alunos.utfpr.edu.br
+
 ============================================================
