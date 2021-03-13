@@ -1,36 +1,38 @@
 # SAE-RoR
 Simulated Automotive Environment for the Rules Of the Road - (SAE-RoR)
 
+## Current version:
+
+> **AV-agent-00**: the agent and the environment work for the following Road Junction rules (from UK Highway Code):
+>> rules **170**, **171**, **172**.
+
+>> UK Highway Code:[https://www.gov.uk/guidance/the-highway-code/using-the-road-159-to-203] 
+
 ## Goal:
 
-> Design, formalise, implement and verify the Road Junction rules into an intelligent agent, which indeed represents the behaviour of an Autonomous Vehicle.
+> Design, formalise, implement and verify the Road Junction rules into an intelligent agent, which represents the behaviour of an Autonomous Vehicle.
 
-> We aim to obtain answers towards the adaption of the Road Junction rules into an Autonomous Vehicles.
+> We aim to assess the adaption of the Road Junction rules into an Autonomous Vehicle.
 
 ## Brief description:
 
-> SAE-RoR is an extension of Simulated Automotive Environment (SAE). SAE is the first version of a simulation environment for an intelligent agent written in Gwendolen agent programming language. Our agent models the behaviour of an Autonomous Vehicle. Moreover, we verify some formal properties related to the AV-agent by using Model Checking techniques (MCAPL).
+> **SAE-RoR** brings a complete architecture to assess the application of Road Junction rules, here are the main stages of our architecture:
 
-> Now, SAE-RoR is designed to determine a formal representation for the Road Junction rules from the UK Highway Code. This formal representation is obtained using Linear Temporal Logic (LTL).
+>> 1. Formal representation of the Road Junction rules from the UK Highway Code using Linear Temporal Logic (LTL).
+>> 2. Modelling Agent and Environment using timed automata with UPPAAL.
+>> 3. Implementation of Agent and Environment using **Gwendolen** agent programming language.
+>> 4. Formal verification of Road Junction properties using **UPPAAL**.
+>> 5. Formal verification of Road Junction properties using **MCAPL/AJPF**.
 
-> Our ongoing work will present the following:
-
->> The Road Junction rules embedded into a Gwendolen agent.
-
->> Design of an Environment in Java, representing crossroads, intersections, traffic signals, road users, etc.
-
->> Formal verification of related properties using MCAPL and AJPF.
-
-
-> SAE-RoR is part of a research project, which is a collaboration between Federal University of Technology - Parana (UTFPR) and University of Liverpool.
+> SAE-RoR is part of a research project, which is a collaboration between Federal University of Technology - Parana (UTFPR) and University of Manchester.
 
 ## Researchers:
 
-> Gleifer Vaz Alves gleifer@utfpr.edu.br
+> Gleifer Vaz Alves gleifer@utfpr.edu.br [https://sites.google.com/view/gleifer]
 
-> Louise Dennis L.A.Dennis@liverpool.ac.uk
+> Louise Dennis louise.dennis@manchester.ac.uk
 
-> Michael Fisher MFisher@liverpool.ac.uk
+> Michael Fisher michael.fisher@manchester.ac.uk
 
 ## Students:
 
