@@ -1,0 +1,116 @@
+// ----------------------------------------------------------------------------
+// Copyright (C) 2014 Louise A. Dennis and Michael Fisher
+// 
+// This file is part of Gwendolen
+//
+// Gwendolen is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public
+// License as published by the Free Software Foundation; either
+// version 3 of the License, or (at your option) any later version.
+// 
+// Gwendolen is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public
+// License along with Gwendolen if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+// 
+// To contact the authors:
+// http://www.csc.liv.ac.uk/~lad
+//----------------------------------------------------------------------------
+//
+// # AV-agent version 2020-21 for JSAN/AREA paper.
+// Agent handles the Highway code rules for road junction: r170, r171, r172.
+// main plans: at_roadjunction; enter_roadjunction_rules170_171; enter_roadjunction_rules170_172;
+// actions: approach_roadjunction(X,Y); check_sign(Z,W); watch(S,T); wait; watching(S,T); 
+// check_safe_gap(S,T); checking(S,T); enter;
+// random elements at the ENV: check_sign(Z,W); watching(S,T); check_safe_gap(S,T); checking(S,T);
+// -------------------------
+// # Improvements for next versions:
+// #1. Add recursive reasoning rule that actually makes the agent searches the whole grid and not only the first position.
+// #2. Add dynamic generation of beliefs. 
+// #3. ...
+// ----------------------------------------------------------------------------
+//
+// # Grid settings:
+// whole grid = {(0,0); (0,1); (0,2); (1,0); (1,1); (1,2); (2,0); (2,1); (2,2)}
+// SAFE Spots = {(2,0); (2,2)}	
+// TARGET Spots = {(1,0); (1,1); (1,2); (2,1)}
+// TARGET Spots means "busy road junction" 
+// SAFE Spots means "free road junction"
+// AND if all TARGET Spots are "free", also means "free road junction"
+// possible AV positions = {0,0 (away); 0,1 (at-RJ); 1,1 (entered-RJ)}
+// signs (stop/give-way) = {0,2}
+// three (possible) road users at three different positions
+// ENV settings for tests, there are road users at: 
+// (2,0); (2,2)  i.e., RJ is free!
+// (2,0); (2,1); (2,2)  i.e., RJ is free!
+// (1,0); (2,1); (2,2)  i.e., RJ is busy!
+// (1,0); (1,1); (1,2)  i.e., RJ is busy!	
+// ----------------------------------------------------------------------------
+
+GWENDOLEN
+
+:name: av
+
+:Initial Beliefs:
+
+av_away(0,0)
+roadjunction(0,1) 
+sign(0,2)
+safe_spot(2,0)
+safe_spot(2,2)
+target_spot(1,0)
+target_spot(1,1)
+target_spot(1,2)
+target_spot(2,1)
+
+
+:Reasoning Rules:
+
+to_watch(S,T) :- target_spot(S,T), ~busy_roadjunction, ~free_roadjunction; 
+
+:Initial Goals:
+
+at_roadjunction(X,Y) [achieve]
+
+:Plans:
+
++!at_roadjunction(X,Y) [achieve] : { B av_away(0,0), B roadjunction(X,Y) } <- approach_roadjunction(X,Y);
+
++at_roadjunction(X,Y) : { B sign(Z,W) } <- check_sign(Z,W);
+
++stop_sign(Z,W) : { B sign(Z,W) } <- +stopped, print("AV has stopped"), +!enter_roadjunction_rules170_171[perform];
+
++give_way_sign(Z,W) : { B sign(Z,W) } <- +given_away, +stopped, print("AV has given away and stopped"), +!enter_roadjunction_rules170_172[perform];
+
+// activates plan to enter road junction via rules 170 and 171
++!enter_roadjunction_rules170_171[perform] : { B at_roadjunction(X,Y), B stopped, B to_watch(S,T) } <- watch(S,T);
+
+// activates plan to enter road junction via rules 170 and 172
++!enter_roadjunction_rules170_172[perform] : { B at_roadjunction(X,Y), B given_away, B stopped, B to_watch(S,T) } <- watch(S,T);
+
+// when road junction is busy
++for_road_users(S,T) : { B road_user(S,T) } <- +busy_roadjunction, wait;
+
+// keep watching until road junction is free
++waiting(road_user) : { B road_user(S,T) } <- print("keep watching until road junction is free"), watching(S,T);
+
+// when road junction is free
+// triggered from action "watch" 
++for_road_users(S,T) : { B no_road_user(S,T) } <- +free_roadjunction, check_safe_gap(S,T);
+// triggered from action "watching"
++try_again(S,T) : { B no_road_user(S,T) } <- +free_roadjunction, print("AV has watched again"), check_safe_gap(S,T);
+
+
+// check_safe_gap outcomes:
++safe_gap(S,T) : { B no_road_user(S,T) } <- enter;
+
++no_safe_gap(S,T) : { B no_road_user(S,T) } <- print("No safe gap. Check again"), checking(S,T);
+// check again for a (new) safe gap
++for_safe_gap(S,T) : { B new_safe_gap(S,T), B no_road_user(S,T) } <- enter;  
+  
++enter_roadjunction : { True } <- done;
+ 

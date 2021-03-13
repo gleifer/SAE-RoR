@@ -1,0 +1,54 @@
+\chapter{Installation Instructions}
+\label{chap:installation}
+\section{Requirements}
+
+The MCAPL software requires Java 8.  
+
+\section{Installation}\index{installation}
+
+\subsection{Installation of MCAPL 2019}\index{installation!Unix}\index{Unix}
+
+\begin{itemize}
+\begin{sloppypar}
+\item Download the 2019 release from Github \texttt{https://github.com/mcapl/mcapl/releases/}.
+\end{sloppypar}
+\item Create a file \texttt{.jpf/site.properties} in your home directory with the path to \ajpfversion\ assigned to the value \texttt{mcapl}
+
+  (e.g. \texttt{mcapl = \$\{user.home\}/Eclipse/mcapl}).
+\item Within the \texttt{mcapl} directory you should find \texttt{build.xml} to which you can apply ant to build ajpf. (e.g., at the command line, \lstinline{ant compile} to just compile the files and \lstinline{ant build} to build and run regression tests (takes just under fifteen minutes on a 3GHz Macbook with 16 GB memory))
+\item Make sure you have the bin sub-directory of \texttt{mcapl} on your java class path.
+\item We recommend you set the \texttt{AJPF\_HOME}\index{AJPF\_HOME} environment variable to give the path to your MCAPL directory.
+\end{itemize}
+
+\subsection{Installation of Development Branch}\index{installation!development branch}\index{development branch}
+
+You will need an installation of the Git\index{Git} version control system (recent versions of the Eclipse IDE come packaged with Git).  It is worth taking some time before you start to understand the basics of Git, particularly checking out versions, switching between branches, commiting changes and managing local and remote repositories.  There are several introduction to Git and Github on the web.
+
+\begin{itemize}
+\begin{sloppypar}
+\item Clone the git repository from github. 
+\begin{small}
+\begin{verbatim}
+git clone https://github.com/mcapl/mcapl.git
+\end{verbatim}
+\end{small}
+\end{sloppypar}
+\item Create a file \texttt{.jpf/site.properties} in your home directory with the path to mcapl assigned to the value \texttt{mcapl} (e.g. \texttt{mcapl = \$\{user.home\}/Eclipse/mcapl}).
+\item Within the mcapl directory you should find \texttt{build.xml} to which you can apply ant to build ajpf. (e.g., at the command line, \lstinline{ant compile} to just compile the files and ant build to build and run regression tests (takes just under fifteen minutes on a 3GHz Macbook with 16 GB memory))
+\item Make sure you have the bin sub-directory of mcapl on your java class path.
+\item We recommend you set the \texttt{AJPF\_HOME}\index{AJPF\_HOME} environment variable to give the path to your mcapl directory.
+\end{itemize}
+
+\section{Eclipse Installation}\index{installation!Eclipse}\index{Eclipse}
+
+We also supply an eclipse \texttt{.project} file so you should be able to import \ajpfversion\ (or mcapl if using the development version)  into eclipse.
+\begin{itemize}
+\item You should then be able to build ajpf by clicking on the build.xml file.
+\item Create a file \texttt{.jpf/site.properties} with the path to \ajpfversion\ (or mcapl if using the development version)  assigned to the value \texttt{mcapl} (e.g. \texttt{mcapl = \$\{user.home\}/Eclipse/\ajpfversion}).
+\item We recommend you set the \texttt{AJPF\_HOME} environment variable to give the path to your ajpf directory.  If necessary you can do this within the Environment tab for individual Run Configurations.
+\end{itemize}
+
+\section{Testing the Installation}
+
+There are a number of JUnit\index{JUnit}\index{test} tests in the subdirectory \texttt{/src/tests} and examples in \texttt{/src/examples}.\index{example}
+
