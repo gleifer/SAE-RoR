@@ -1,0 +1,415 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE nta PUBLIC '-//Uppaal Team//DTD Flat System 1.1//EN' 'http://www.it.uu.se/research/group/darts/uppaal/flat-1_2.dtd'>
+<nta>
+	<declaration>// Place global declarations here.
+chan AV_approach, AV_away, stop, stop_and_give_way, watching, free, busy, wait, should_wait, try_again;
+
+chan enter, is_stop_sign, is_give_way_sign, RU_away, RU_crossing, yes_safe_gap, no_safe_gap;
+</declaration>
+	<template>
+		<name x="5" y="5">AV_agent</name>
+		<declaration>// Place local declarations here.
+clock x;</declaration>
+		<location id="id0" x="-168" y="-144">
+			<name x="-229" y="-170">AV_away_from_RJ</name>
+		</location>
+		<location id="id1" x="-169" y="42">
+			<name x="-229" y="8">watch_out_for_RU</name>
+			<label kind="invariant" x="-186" y="51">x&lt;=3</label>
+		</location>
+		<location id="id2" x="-168" y="-85">
+			<name x="-204" y="-93">AV_at_RJ</name>
+		</location>
+		<location id="id3" x="-34" y="93">
+			<name x="-68" y="68">waiting</name>
+			<label kind="invariant" x="-51" y="102">x&lt;=5</label>
+		</location>
+		<location id="id4" x="-169" y="144">
+			<name x="-238" y="153">check_for_safe_gap</name>
+			<label kind="invariant" x="-187" y="136">x&lt;=4</label>
+		</location>
+		<location id="id5" x="-289" y="-85" color="#00ff00">
+			<name x="-340" y="-110">AV_entered_RJ</name>
+		</location>
+		<init ref="id0"/>
+		<transition>
+			<source ref="id5"/>
+			<target ref="id0"/>
+			<label kind="synchronisation" x="-314" y="-161">AV_away!</label>
+			<label kind="assignment" x="-271" y="-144">x=0</label>
+			<nail x="-289" y="-144"/>
+		</transition>
+		<transition>
+			<source ref="id2"/>
+			<target ref="id1"/>
+			<label kind="synchronisation" x="-161" y="-51">stop_and_give_way?</label>
+			<label kind="assignment" x="-153" y="-34">x=0</label>
+			<nail x="-119" y="-25"/>
+		</transition>
+		<transition>
+			<source ref="id2"/>
+			<target ref="id1"/>
+			<label kind="synchronisation" x="-246" y="-51">stop?</label>
+			<label kind="assignment" x="-238" y="-34">x=0</label>
+			<nail x="-212" y="-34"/>
+		</transition>
+		<transition>
+			<source ref="id1"/>
+			<target ref="id3"/>
+			<label kind="guard" x="-127" y="102">x&gt;=1</label>
+			<label kind="synchronisation" x="-136" y="85">busy?</label>
+			<nail x="-127" y="110"/>
+		</transition>
+		<transition>
+			<source ref="id4"/>
+			<target ref="id5"/>
+			<label kind="guard" x="-331" y="17">x&gt;=2</label>
+			<label kind="synchronisation" x="-340" y="-8">enter?</label>
+			<nail x="-288" y="144"/>
+			<nail x="-289" y="17"/>
+		</transition>
+		<transition>
+			<source ref="id3"/>
+			<target ref="id3"/>
+			<label kind="synchronisation" x="0" y="85">wait?</label>
+			<nail x="0" y="119"/>
+			<nail x="0" y="119"/>
+			<nail x="0" y="76"/>
+		</transition>
+		<transition>
+			<source ref="id1"/>
+			<target ref="id1"/>
+			<label kind="synchronisation" x="-263" y="34">watching!</label>
+			<nail x="-220" y="25"/>
+			<nail x="-220" y="68"/>
+		</transition>
+		<transition>
+			<source ref="id3"/>
+			<target ref="id1"/>
+			<label kind="guard" x="-34" y="42">x&gt;=2</label>
+			<label kind="synchronisation" x="-110" y="42">try_again!</label>
+			<label kind="assignment" x="-85" y="34">x=0</label>
+			<nail x="-85" y="59"/>
+		</transition>
+		<transition>
+			<source ref="id4"/>
+			<target ref="id3"/>
+			<label kind="guard" x="-68" y="153">x&gt;=2</label>
+			<label kind="synchronisation" x="-93" y="136">should_wait?</label>
+			<nail x="-144" y="144"/>
+			<nail x="-93" y="144"/>
+		</transition>
+		<transition>
+			<source ref="id1"/>
+			<target ref="id4"/>
+			<label kind="guard" x="-212" y="102">x&gt;=2</label>
+			<label kind="synchronisation" x="-203" y="85">free?</label>
+		</transition>
+		<transition>
+			<source ref="id0"/>
+			<target ref="id2"/>
+			<label kind="synchronisation" x="-161" y="-127">AV_approach!</label>
+		</transition>
+	</template>
+	<template>
+		<name>RJ_Env</name>
+		<location id="id6" x="-76" y="-178">
+			<name x="-86" y="-212">Idle</name>
+		</location>
+		<location id="id7" x="-76" y="-127">
+			<name x="-102" y="-144">check_for_sign</name>
+		</location>
+		<location id="id8" x="-119" y="-85">
+			<name x="-178" y="-93">send_stop</name>
+		</location>
+		<location id="id9" x="-34" y="-85">
+			<name x="-42" y="-93">send_stop_and_give_away</name>
+		</location>
+		<location id="id10" x="-76" y="-34">
+			<name x="-119" y="-42">waiting_for_AV</name>
+		</location>
+		<location id="id11" x="-76" y="17">
+			<name x="-102" y="0">check_RU</name>
+		</location>
+		<location id="id12" x="-178" y="17">
+			<name x="-221" y="-8">free_RJ</name>
+		</location>
+		<location id="id13" x="34" y="17">
+			<name x="26" y="8">AV_is_waiting</name>
+		</location>
+		<location id="id14" x="-76" y="102">
+			<name x="-102" y="93">busy_RJ</name>
+		</location>
+		<location id="id15" x="34" y="102">
+			<name x="26" y="93">AV_should_wait</name>
+		</location>
+		<location id="id16" x="-178" y="85">
+			<name x="-255" y="68">check_for_safe_gap</name>
+		</location>
+		<location id="id17" x="-76" y="161">
+			<name x="-136" y="170">there_is_no_safe_gap</name>
+		</location>
+		<location id="id18" x="-246" y="127">
+			<name x="-297" y="144">there_is_safe_gap</name>
+		</location>
+		<location id="id19" x="-340" y="127" color="#00ff00">
+			<name x="-416" y="136">AV_may_enter</name>
+		</location>
+		<init ref="id6"/>
+		<transition>
+			<source ref="id19"/>
+			<target ref="id6"/>
+			<label kind="synchronisation" x="-322" y="-127">AV_away?</label>
+			<nail x="-340" y="-110"/>
+			<nail x="-238" y="-110"/>
+			<nail x="-238" y="-178"/>
+		</transition>
+		<transition>
+			<source ref="id18"/>
+			<target ref="id19"/>
+			<label kind="synchronisation" x="-306" y="127">enter!</label>
+		</transition>
+		<transition>
+			<source ref="id17"/>
+			<target ref="id15"/>
+			<label kind="synchronisation" x="-59" y="127">should_wait!</label>
+		</transition>
+		<transition>
+			<source ref="id16"/>
+			<target ref="id17"/>
+			<label kind="synchronisation" x="-187" y="119">no_safe_gap?</label>
+		</transition>
+		<transition>
+			<source ref="id16"/>
+			<target ref="id18"/>
+			<label kind="synchronisation" x="-314" y="93">yes_safe_gap?</label>
+		</transition>
+		<transition>
+			<source ref="id12"/>
+			<target ref="id16"/>
+			<label kind="synchronisation" x="-178" y="42">free!</label>
+		</transition>
+		<transition>
+			<source ref="id13"/>
+			<target ref="id11"/>
+			<label kind="synchronisation" x="-51" y="17">try_again?</label>
+		</transition>
+		<transition>
+			<source ref="id15"/>
+			<target ref="id13"/>
+			<label kind="synchronisation" x="34" y="42">wait!</label>
+		</transition>
+		<transition>
+			<source ref="id14"/>
+			<target ref="id15"/>
+			<label kind="synchronisation" x="-34" y="85">busy!</label>
+		</transition>
+		<transition>
+			<source ref="id11"/>
+			<target ref="id14"/>
+			<label kind="synchronisation" x="-102" y="59">RU_crossing?</label>
+		</transition>
+		<transition>
+			<source ref="id11"/>
+			<target ref="id12"/>
+			<label kind="synchronisation" x="-161" y="17">RU_away?</label>
+		</transition>
+		<transition>
+			<source ref="id10"/>
+			<target ref="id11"/>
+			<label kind="synchronisation" x="-76" y="-25">watching?</label>
+		</transition>
+		<transition>
+			<source ref="id9"/>
+			<target ref="id10"/>
+			<label kind="synchronisation" x="-51" y="-68">stop_and_give_way!</label>
+		</transition>
+		<transition>
+			<source ref="id8"/>
+			<target ref="id10"/>
+			<label kind="synchronisation" x="-136" y="-68">stop!</label>
+		</transition>
+		<transition>
+			<source ref="id7"/>
+			<target ref="id9"/>
+			<label kind="synchronisation" x="-55" y="-123">is_give_way_sign?</label>
+		</transition>
+		<transition>
+			<source ref="id7"/>
+			<target ref="id8"/>
+			<label kind="synchronisation" x="-195" y="-119">is_stop_sign?</label>
+		</transition>
+		<transition>
+			<source ref="id6"/>
+			<target ref="id7"/>
+			<label kind="synchronisation" x="-76" y="-169">AV_approach?</label>
+		</transition>
+	</template>
+	<template>
+		<name>road_user</name>
+		<location id="id20" x="-68" y="-136">
+			<name x="-178" y="-144">RU_away_from_RJ</name>
+		</location>
+		<location id="id21" x="51" y="-136">
+			<name x="42" y="-144">RU_crossing_RJ</name>
+		</location>
+		<init ref="id20"/>
+		<transition>
+			<source ref="id21"/>
+			<target ref="id20"/>
+			<label kind="synchronisation" x="-42" y="-102">RU_away!</label>
+			<nail x="25" y="-102"/>
+			<nail x="-43" y="-102"/>
+		</transition>
+		<transition>
+			<source ref="id20"/>
+			<target ref="id21"/>
+			<label kind="synchronisation" x="-51" y="-187">RU_crossing!</label>
+			<nail x="-34" y="-170"/>
+			<nail x="17" y="-170"/>
+		</transition>
+	</template>
+	<template>
+		<name>safe_gap</name>
+		<location id="id22" x="-51" y="-93">
+			<name x="-170" y="-110">check_safe_gap</name>
+		</location>
+		<init ref="id22"/>
+		<transition>
+			<source ref="id22"/>
+			<target ref="id22"/>
+			<label kind="synchronisation" x="-127" y="-51">no_safe_gap!</label>
+			<nail x="-102" y="-68"/>
+			<nail x="-42" y="-42"/>
+		</transition>
+		<transition>
+			<source ref="id22"/>
+			<target ref="id22"/>
+			<label kind="synchronisation" x="-42" y="-153">yes_safe_gap!</label>
+			<nail x="-68" y="-127"/>
+			<nail x="0" y="-127"/>
+		</transition>
+	</template>
+	<template>
+		<name>sign</name>
+		<location id="id23" x="-25" y="-42">
+			<name x="-110" y="-59">check_sign</name>
+		</location>
+		<init ref="id23"/>
+		<transition>
+			<source ref="id23"/>
+			<target ref="id23"/>
+			<label kind="synchronisation" x="-102" y="0">is_give_way_sign!</label>
+			<nail x="-76" y="-17"/>
+			<nail x="-8" y="8"/>
+		</transition>
+		<transition>
+			<source ref="id23"/>
+			<target ref="id23"/>
+			<label kind="synchronisation" x="-25" y="-93">is_stop_sign!</label>
+			<nail x="-42" y="-76"/>
+			<nail x="17" y="-68"/>
+		</transition>
+	</template>
+	<system>// Place template instantiations here.
+AV = AV_agent();
+RoadJunction = RJ_Env();
+RoadUser1 = road_user();
+RoadUser2 = road_user();
+RoadUser3 = road_user();
+SafeGap = safe_gap();
+Sign1 = sign();
+// List one or more processes to be composed into a system.
+system AV, RoadJunction, RoadUser1, RoadUser2, RoadUser3, SafeGap, Sign1;
+    </system>
+	<queries>
+		<query>
+			<formula>E&lt;&gt; (RoadUser1.RU_away_from_RJ &amp;&amp; RoadUser2.RU_away_from_RJ &amp;&amp; RoadUser3.RU_away_from_RJ) imply AV.check_for_safe_gap</formula>
+			<comment></comment>
+		</query>
+		<query>
+			<formula>A&lt;&gt; ((RoadUser1.RU_crossing_RJ || RoadUser2.RU_crossing_RJ || RoadUser3.RU_crossing_RJ) &amp;&amp; RoadJunction.busy_RJ) imply AV.waiting</formula>
+			<comment></comment>
+		</query>
+		<query>
+			<formula>A&lt;&gt; (RoadUser1.RU_crossing_RJ || RoadUser2.RU_crossing_RJ || RoadUser3.RU_crossing_RJ) imply RoadJunction.busy_RJ</formula>
+			<comment></comment>
+		</query>
+		<query>
+			<formula>E&lt;&gt; (RoadUser1.RU_away_from_RJ || RoadUser2.RU_away_from_RJ) imply AV.check_for_safe_gap</formula>
+			<comment></comment>
+		</query>
+		<query>
+			<formula>E&lt;&gt; (RoadUser1.RU_away_from_RJ &amp;&amp; RoadUser2.RU_away_from_RJ) imply AV.check_for_safe_gap</formula>
+			<comment></comment>
+		</query>
+		<query>
+			<formula>A&lt;&gt; ((RoadUser1.RU_crossing_RJ || RoadUser2.RU_crossing_RJ) &amp;&amp; RoadJunction.busy_RJ) imply AV.waiting</formula>
+			<comment></comment>
+		</query>
+		<query>
+			<formula>A&lt;&gt; (RoadUser1.RU_crossing_RJ &amp;&amp; RoadUser2.RU_crossing_RJ) imply RoadJunction.busy_RJ</formula>
+			<comment></comment>
+		</query>
+		<query>
+			<formula>A&lt;&gt; (RoadUser1.RU_crossing_RJ || RoadUser2.RU_crossing_RJ) imply RoadJunction.busy_RJ</formula>
+			<comment></comment>
+		</query>
+		<query>
+			<formula>A&lt;&gt; AV.AV_at_RJ imply (RoadJunction.send_stop || RoadJunction.send_stop_and_give_away)</formula>
+			<comment></comment>
+		</query>
+		<query>
+			<formula>A&lt;&gt; AV.AV_at_RJ imply RoadJunction.AV_may_enter</formula>
+			<comment></comment>
+		</query>
+		<query>
+			<formula>E&lt;&gt; RoadUser1.RU_away_from_RJ imply AV.check_for_safe_gap</formula>
+			<comment></comment>
+		</query>
+		<query>
+			<formula>A&lt;&gt; (RoadUser1.RU_crossing_RJ &amp;&amp; RoadJunction.busy_RJ) imply AV.waiting</formula>
+			<comment></comment>
+		</query>
+		<query>
+			<formula>A&lt;&gt; RoadUser1.RU_crossing_RJ imply AV.waiting</formula>
+			<comment></comment>
+		</query>
+		<query>
+			<formula>A&lt;&gt; RoadJunction.busy_RJ imply AV.waiting</formula>
+			<comment></comment>
+		</query>
+		<query>
+			<formula>E&lt;&gt; RoadJunction.free_RJ imply AV.AV_entered_RJ</formula>
+			<comment></comment>
+		</query>
+		<query>
+			<formula>A[] not deadlock</formula>
+			<comment></comment>
+		</query>
+		<query>
+			<formula>E&lt;&gt; RoadJunction.AV_may_enter &amp;&amp; AV.AV_entered_RJ</formula>
+			<comment></comment>
+		</query>
+		<query>
+			<formula>A[] AV.watch_out_for_RU imply (AV.x &gt;= 0 &amp;&amp; AV.x &lt;= 3)</formula>
+			<comment></comment>
+		</query>
+		<query>
+			<formula>A[] AV.waiting imply (AV.x &gt;= 1 &amp;&amp; AV.x &lt;= 5)</formula>
+			<comment></comment>
+		</query>
+		<query>
+			<formula>A[] AV.check_for_safe_gap imply (AV.x &gt;= 2 &amp;&amp; AV.x &lt;= 4)</formula>
+			<comment></comment>
+		</query>
+		<query>
+			<formula>E[] AV.x &gt;= 3 imply AV.AV_entered_RJ  </formula>
+			<comment></comment>
+		</query>
+		<query>
+			<formula>A&lt;&gt; RoadUser1.RU_crossing_RJ imply RoadJunction.busy_RJ</formula>
+			<comment></comment>
+		</query>
+	</queries>
+</nta>
