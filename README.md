@@ -26,10 +26,11 @@ Simulated Automotive Environment for the Rules Of the Road - (SAE-RoR)
 
 > SAE-RoR is part of a research project, which is a collaboration between Federal University of Technology - Parana (UTFPR) and University of Manchester.
 
-## Main publicaton:
+## Main publication:
 
 > A Double-Level Model Checking Approach for an Agent-Based Autonomous Vehicle and Road Junction Regulations
 >> [https://www.mdpi.com/1164912]
+
 >> For further publications go to [https://sites.google.com/view/gleifer/research/publications]
 
 ## Researchers:
