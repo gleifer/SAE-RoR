@@ -25,32 +25,47 @@
 // Agent handles the Highway code rules for road junction: r170, r171, r172.
 // This file contains the properties formally verified via AJPF.
 // 
+// see "AJPF-properties-backup-PSL-file.txt" for details and descriptions of the properties.
+// including the sanity checking
+// 
 //-------------------------------------------------------------
 
+
 p1: (B(av,sign(0,2)) & B(av,stopped)) -> [] G(av, enter_roadjunction_rules170_171)
-// when av believes there is a sign at (0,2) and it has stopped, then it always obtains the goal of entering the road junction using rules 170-171.
-// helps to keep track of the agent's goals through its execution telling which RJ rules have been selected.
+
 
 p2: (B(av,sign(0,2)) & B(av,given_away) & B(av,stopped)) -> [] G(av, enter_roadjunction_rules170_172)
-// when av believes there is a sign at (0,2), it has given away and stopped, then it always obtains the goal of entering the road junction using rules 170-172. 
 
-p3: <> (B(av,at_roadjunction(1,0) & B(av,stopped)) -> D(av,watch(1,0))
-// at some time when av believes it is at road junction at (0,1) and it has stopped, then av watches for road user at (1,0).
-// helps to determine which actions have been selected by the agent and under which conditions.
-// here, we show action "watch" can be selected in two different cases (p3 and p4).
 
-p4: <> (B(av,at_roadjunction(1,0) & B(av,given_away) & B(av,stopped)) -> D(av,watch(1,0))
-// at some time when av believes it is at road junction at (0,1), it has given away and stopped, then av watches for road user at (1,0).
+p3: [] (B(av,at_roadjunction(1,0)) -> <>(B(av,road_user(1,0)) || B(av,no_road_user(1,0))))
 
-p5: (B(av,road_user(1,0)) & B(av,busy_roadjunction)) -> [] D(av,wait)
-// when av believes there is a road user at (1,0) and road junction is busy, then it will always wait at road junction. 
 
-p6: (B(av,no_road_user(1,0)) & B(av,free_roadjunction)) -> [] D(av,check_safe_gap(1,0))
-// when av believes there is no road user at (1,0) and road junction is free, then it will always check for safe gap at (1,0). 
+p4: [] (D(av,wait) -> (B(av,road_user(1,0)) & B(av,busy_roadjunction)))
 
-p7: ((B(av,safe_gap(1,0)) || B(av,new_safe_gap(1,0))) & B(av,no_road_user(1,0)))-> [] D(av,enter)
-// when av believes there is no road user at (1,0) and there is a safe gap at (1,0) (either a new safe gap or a previous one), then it will always enter at road junction. 
+
+p5: [] ((B(av,no_road_user(1,0)) & B(av,free_roadjunction)) -> <> (B(av,no_safe_gap(1,0) || B(av,safe_gap(1,0)) || B(av,new_safe_gap(1,0)) || B(av,try_again(1,0))))
+
+
+p6: [] (D(av,check_safe_gap(1,0)) -> ~B(av,busy_roadjunction))
+
+
+p7: [] (D(av,check_safe_gap(1,0)) -> ~B(av,road_user(1,0)))
+
+
+p8: [] (D(av,check_safe_gap(1,0)) -> (B(av,no_road_user(1,0)) & B(av,free_roadjunction))) 
+
+
+p9: [] (D(av,enter) -> ~B(av,busy_roadjunction))
+
+
+p10: [] (D(av,enter) -> ~B(av,road_user(1,0)))
+
+
+p11: [] (D(av,enter) -> ~B(av,try_again(1,0)))
+
+
+p12: [] (D(av,enter) -> (B(av,safe_gap(1,0)) || B(av,new_safe_gap(1,0)) & B(av,no_road_user(1,0)))) 
+
 
 //---------------------------------------------------
-
 

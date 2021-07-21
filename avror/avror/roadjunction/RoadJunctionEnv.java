@@ -336,7 +336,12 @@ public class RoadJunctionEnv extends DefaultEnvironmentwRandomness implements MC
 			no_road_user.addTerm(new NumberTermImpl(av_y));
 			System.out.println("Road junction is free!");
 			addPercept(agName, no_road_user);
-			            
+			// removing the perception that there is a Road User at (X,Y) 
+			Predicate road_user = new Predicate("road_user");
+			road_user.addTerm(new NumberTermImpl(av_x));
+			road_user.addTerm(new NumberTermImpl(av_y));
+			removePercept(agName,road_user);
+			
         }		
 		
 								
@@ -365,6 +370,13 @@ public class RoadJunctionEnv extends DefaultEnvironmentwRandomness implements MC
 			} else {
 				addPercept(agName, no_safe_gap);
 			}					
+						
+			// Also needs to remove the previous perception "try_again", used to keep watching for Road Users 			
+			Predicate try_again = new Predicate("try_again");
+			try_again.addTerm(new NumberTermImpl(x));
+			try_again.addTerm(new NumberTermImpl(y));			
+			removePercept(agName, try_again);			
+			
 		}		
 		
 		

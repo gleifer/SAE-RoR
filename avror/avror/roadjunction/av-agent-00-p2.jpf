@@ -27,4 +27,4 @@
 target = ail.util.AJPF_w_AIL
 target.args = ${mcapl}/avror/avror/roadjunction/av-agent-00.ail,${mcapl}/avror/avror/roadjunction/av-agent-00.psl,p2
 
-
+log.info=ajpf.MCAPLAgent,ajpf.product.Product,ail.mas.DefaultEnvironment,gwendolen.simple.SimpleEnv,ajpf.psl.buchi.BuchiAutomaton

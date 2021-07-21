@@ -102,7 +102,7 @@ at_roadjunction(X,Y) [achieve]
 // triggered from action "watch" 
 +for_road_users(S,T) : { B no_road_user(S,T) } <- +free_roadjunction, check_safe_gap(S,T);
 // triggered from action "watching"
-+try_again(S,T) : { B no_road_user(S,T) } <- +free_roadjunction, print("AV has watched again"), check_safe_gap(S,T);
++try_again(S,T) : { B no_road_user(S,T) } <- +free_roadjunction, -busy_roadjunction, print("AV has watched again"), check_safe_gap(S,T);
 
 
 // check_safe_gap outcomes:
@@ -112,5 +112,5 @@ at_roadjunction(X,Y) [achieve]
 // check again for a (new) safe gap
 +for_safe_gap(S,T) : { B new_safe_gap(S,T), B no_road_user(S,T) } <- enter;  
   
-+enter_roadjunction : { True } <- done;
++enter_roadjunction : { True } <- +away_from_roadjunction, done;
  

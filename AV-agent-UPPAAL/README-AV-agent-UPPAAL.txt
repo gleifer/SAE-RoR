@@ -1,6 +1,7 @@
 =============================================
 
 [13.03.2021]
+last update on [22.05.2021]
 
 # SAE-RoR 
 
@@ -16,6 +17,16 @@
 
 ---------------------------------------------
 
+> file: AV-RoR-version-2.q
+>> has the 18 properties verified with UPPAAL
+>> with the corresponding updateds on the properties
+>> see AV-RoR-formal-verification.ods for details
 
+----------------------------------------------
+
+> file: AV-RoR-version-3.q
+>> has the 18 properties verified with UPPAAL
+>> with the newest corresponding updateds on the properties
+>> see AV-RoR-formal-verification.ods for details
 
 =============================================

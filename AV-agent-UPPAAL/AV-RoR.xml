@@ -15,18 +15,18 @@ clock x;</declaration>
 		</location>
 		<location id="id1" x="-169" y="42">
 			<name x="-229" y="8">watch_out_for_RU</name>
-			<label kind="invariant" x="-186" y="51">x&lt;=3</label>
+			<label kind="invariant" x="-212" y="59">x&lt;=3</label>
 		</location>
 		<location id="id2" x="-168" y="-85">
-			<name x="-204" y="-93">AV_at_RJ</name>
+			<name x="-153" y="-93">AV_at_RJ</name>
 		</location>
 		<location id="id3" x="-34" y="93">
-			<name x="-68" y="68">waiting</name>
-			<label kind="invariant" x="-51" y="102">x&lt;=5</label>
+			<name x="-59" y="59">waiting</name>
+			<label kind="invariant" x="-51" y="110">x&lt;=5</label>
 		</location>
 		<location id="id4" x="-169" y="144">
-			<name x="-238" y="153">check_for_safe_gap</name>
-			<label kind="invariant" x="-187" y="136">x&lt;=4</label>
+			<name x="-255" y="161">AV_check_for_safe_gap</name>
+			<label kind="invariant" x="-221" y="127">x&lt;=4</label>
 		</location>
 		<location id="id5" x="-289" y="-85" color="#00ff00">
 			<name x="-340" y="-110">AV_entered_RJ</name>
@@ -36,13 +36,12 @@ clock x;</declaration>
 			<source ref="id5"/>
 			<target ref="id0"/>
 			<label kind="synchronisation" x="-314" y="-161">AV_away!</label>
-			<label kind="assignment" x="-271" y="-144">x=0</label>
 			<nail x="-289" y="-144"/>
 		</transition>
 		<transition>
 			<source ref="id2"/>
 			<target ref="id1"/>
-			<label kind="synchronisation" x="-161" y="-51">stop_and_give_way?</label>
+			<label kind="synchronisation" x="-136" y="-59">stop_and_give_way?</label>
 			<label kind="assignment" x="-153" y="-34">x=0</label>
 			<nail x="-119" y="-25"/>
 		</transition>
@@ -56,7 +55,7 @@ clock x;</declaration>
 		<transition>
 			<source ref="id1"/>
 			<target ref="id3"/>
-			<label kind="guard" x="-127" y="102">x&gt;=1</label>
+			<label kind="guard" x="-127" y="110">x&gt;=1</label>
 			<label kind="synchronisation" x="-136" y="85">busy?</label>
 			<nail x="-127" y="110"/>
 		</transition>
@@ -86,15 +85,15 @@ clock x;</declaration>
 		<transition>
 			<source ref="id3"/>
 			<target ref="id1"/>
-			<label kind="guard" x="-34" y="42">x&gt;=2</label>
-			<label kind="synchronisation" x="-110" y="42">try_again!</label>
-			<label kind="assignment" x="-85" y="34">x=0</label>
+			<label kind="guard" x="-59" y="34">x&gt;=2</label>
+			<label kind="synchronisation" x="-136" y="34">try_again!</label>
+			<label kind="assignment" x="-110" y="59">x=0</label>
 			<nail x="-85" y="59"/>
 		</transition>
 		<transition>
 			<source ref="id4"/>
 			<target ref="id3"/>
-			<label kind="guard" x="-68" y="153">x&gt;=2</label>
+			<label kind="guard" x="-85" y="153">x&gt;=2</label>
 			<label kind="synchronisation" x="-93" y="136">should_wait?</label>
 			<nail x="-144" y="144"/>
 			<nail x="-93" y="144"/>
@@ -103,7 +102,7 @@ clock x;</declaration>
 			<source ref="id1"/>
 			<target ref="id4"/>
 			<label kind="guard" x="-212" y="102">x&gt;=2</label>
-			<label kind="synchronisation" x="-203" y="85">free?</label>
+			<label kind="synchronisation" x="-204" y="85">free?</label>
 		</transition>
 		<transition>
 			<source ref="id0"/>
@@ -113,81 +112,92 @@ clock x;</declaration>
 	</template>
 	<template>
 		<name>RJ_Env</name>
+		<declaration>int ru;</declaration>
 		<location id="id6" x="-76" y="-178">
 			<name x="-86" y="-212">Idle</name>
 		</location>
 		<location id="id7" x="-76" y="-127">
-			<name x="-102" y="-144">check_for_sign</name>
+			<name x="-59" y="-144">check_for_sign</name>
 		</location>
 		<location id="id8" x="-119" y="-85">
-			<name x="-178" y="-93">send_stop</name>
+			<name x="-204" y="-93">send_stop</name>
 		</location>
 		<location id="id9" x="-34" y="-85">
-			<name x="-42" y="-93">send_stop_and_give_away</name>
+			<name x="-17" y="-93">send_stop_and_give_way</name>
 		</location>
 		<location id="id10" x="-76" y="-34">
-			<name x="-119" y="-42">waiting_for_AV</name>
+			<name x="-195" y="-42">waiting_for_AV</name>
 		</location>
 		<location id="id11" x="-76" y="17">
-			<name x="-102" y="0">check_RU</name>
+			<name x="-68" y="-8">check_RU</name>
 		</location>
 		<location id="id12" x="-178" y="17">
-			<name x="-221" y="-8">free_RJ</name>
+			<name x="-221" y="-17">is_RJ_free</name>
 		</location>
 		<location id="id13" x="34" y="17">
-			<name x="26" y="8">AV_is_waiting</name>
+			<name x="51" y="8">AV_is_waiting</name>
 		</location>
 		<location id="id14" x="-76" y="102">
-			<name x="-102" y="93">busy_RJ</name>
+			<name x="-136" y="76">busy_RJ</name>
 		</location>
 		<location id="id15" x="34" y="102">
-			<name x="26" y="93">AV_should_wait</name>
+			<name x="51" y="93">AV_should_wait</name>
 		</location>
-		<location id="id16" x="-178" y="85">
-			<name x="-255" y="68">check_for_safe_gap</name>
+		<location id="id16" x="-246" y="119">
+			<name x="-306" y="128">check_for_safe_gap</name>
 		</location>
-		<location id="id17" x="-76" y="161">
-			<name x="-136" y="170">there_is_no_safe_gap</name>
+		<location id="id17" x="-136" y="144">
+			<name x="-196" y="153">there_is_no_safe_gap</name>
 		</location>
-		<location id="id18" x="-246" y="127">
-			<name x="-297" y="144">there_is_safe_gap</name>
+		<location id="id18" x="-340" y="119">
+			<name x="-408" y="144">there_is_safe_gap</name>
 		</location>
-		<location id="id19" x="-340" y="127" color="#00ff00">
-			<name x="-416" y="136">AV_may_enter</name>
+		<location id="id19" x="-340" y="-85" color="#00ff00">
+			<name x="-331" y="-76">AV_may_enter</name>
 		</location>
 		<init ref="id6"/>
 		<transition>
+			<source ref="id12"/>
+			<target ref="id16"/>
+			<label kind="guard" x="-246" y="25">ru==0</label>
+			<label kind="synchronisation" x="-280" y="42">free!</label>
+			<nail x="-246" y="17"/>
+			<nail x="-246" y="68"/>
+		</transition>
+		<transition>
+			<source ref="id12"/>
+			<target ref="id14"/>
+			<label kind="guard" x="-178" y="51">ru!=0</label>
+			<nail x="-178" y="102"/>
+			<nail x="-127" y="102"/>
+		</transition>
+		<transition>
 			<source ref="id19"/>
 			<target ref="id6"/>
-			<label kind="synchronisation" x="-322" y="-127">AV_away?</label>
-			<nail x="-340" y="-110"/>
+			<label kind="synchronisation" x="-229" y="-170">AV_away?</label>
+			<nail x="-238" y="-85"/>
 			<nail x="-238" y="-110"/>
 			<nail x="-238" y="-178"/>
 		</transition>
 		<transition>
 			<source ref="id18"/>
 			<target ref="id19"/>
-			<label kind="synchronisation" x="-306" y="127">enter!</label>
+			<label kind="synchronisation" x="-382" y="-17">enter!</label>
 		</transition>
 		<transition>
 			<source ref="id17"/>
 			<target ref="id15"/>
-			<label kind="synchronisation" x="-59" y="127">should_wait!</label>
+			<label kind="synchronisation" x="-68" y="127">should_wait!</label>
 		</transition>
 		<transition>
 			<source ref="id16"/>
 			<target ref="id17"/>
-			<label kind="synchronisation" x="-187" y="119">no_safe_gap?</label>
+			<label kind="synchronisation" x="-221" y="110">no_safe_gap?</label>
 		</transition>
 		<transition>
 			<source ref="id16"/>
 			<target ref="id18"/>
-			<label kind="synchronisation" x="-314" y="93">yes_safe_gap?</label>
-		</transition>
-		<transition>
-			<source ref="id12"/>
-			<target ref="id16"/>
-			<label kind="synchronisation" x="-178" y="42">free!</label>
+			<label kind="synchronisation" x="-357" y="85">yes_safe_gap?</label>
 		</transition>
 		<transition>
 			<source ref="id13"/>
@@ -207,17 +217,20 @@ clock x;</declaration>
 		<transition>
 			<source ref="id11"/>
 			<target ref="id14"/>
-			<label kind="synchronisation" x="-102" y="59">RU_crossing?</label>
+			<label kind="synchronisation" x="-102" y="42">RU_crossing?</label>
+			<label kind="assignment" x="-76" y="59">ru++</label>
 		</transition>
 		<transition>
 			<source ref="id11"/>
 			<target ref="id12"/>
 			<label kind="synchronisation" x="-161" y="17">RU_away?</label>
+			<label kind="assignment" x="-136" y="0">ru--</label>
 		</transition>
 		<transition>
 			<source ref="id10"/>
 			<target ref="id11"/>
 			<label kind="synchronisation" x="-76" y="-25">watching?</label>
+			<label kind="assignment" x="-119" y="-17">ru:=0</label>
 		</transition>
 		<transition>
 			<source ref="id9"/>
@@ -242,7 +255,7 @@ clock x;</declaration>
 		<transition>
 			<source ref="id6"/>
 			<target ref="id7"/>
-			<label kind="synchronisation" x="-76" y="-169">AV_approach?</label>
+			<label kind="synchronisation" x="-68" y="-170">AV_approach?</label>
 		</transition>
 	</template>
 	<template>
@@ -251,7 +264,7 @@ clock x;</declaration>
 			<name x="-178" y="-144">RU_away_from_RJ</name>
 		</location>
 		<location id="id21" x="51" y="-136">
-			<name x="42" y="-144">RU_crossing_RJ</name>
+			<name x="68" y="-144">RU_crossing_RJ</name>
 		</location>
 		<init ref="id20"/>
 		<transition>
@@ -321,70 +334,224 @@ SafeGap = safe_gap();
 Sign1 = sign();
 // List one or more processes to be composed into a system.
 system AV, RoadJunction, RoadUser1, RoadUser2, RoadUser3, SafeGap, Sign1;
-    </system>
+</system>
 	<queries>
 		<query>
-			<formula>E&lt;&gt; (RoadUser1.RU_away_from_RJ &amp;&amp; RoadUser2.RU_away_from_RJ &amp;&amp; RoadUser3.RU_away_from_RJ) imply AV.check_for_safe_gap</formula>
+			<formula>RoadJunction.waiting_for_AV --&gt; AV.watch_out_for_RU</formula>
 			<comment></comment>
 		</query>
 		<query>
-			<formula>A&lt;&gt; ((RoadUser1.RU_crossing_RJ || RoadUser2.RU_crossing_RJ || RoadUser3.RU_crossing_RJ) &amp;&amp; RoadJunction.busy_RJ) imply AV.waiting</formula>
+			<formula>RoadJunction.AV_may_enter --&gt; AV.AV_entered_RJ</formula>
 			<comment></comment>
 		</query>
 		<query>
-			<formula>A&lt;&gt; (RoadUser1.RU_crossing_RJ || RoadUser2.RU_crossing_RJ || RoadUser3.RU_crossing_RJ) imply RoadJunction.busy_RJ</formula>
+			<formula>A[] (RoadJunction.waiting_for_AV imply AV.watch_out_for_RU)</formula>
 			<comment></comment>
 		</query>
 		<query>
-			<formula>E&lt;&gt; (RoadUser1.RU_away_from_RJ || RoadUser2.RU_away_from_RJ) imply AV.check_for_safe_gap</formula>
+			<formula>A[] ((RoadUser1.RU_crossing_RJ || RoadUser2.RU_crossing_RJ || RoadUser3.RU_crossing_RJ) imply (RoadJunction.is_RJ_free || RoadJunction.busy_RJ || RoadJunction.AV_should_wait || RoadJunction.AV_is_waiting || RoadJunction.check_RU))</formula>
 			<comment></comment>
 		</query>
 		<query>
-			<formula>E&lt;&gt; (RoadUser1.RU_away_from_RJ &amp;&amp; RoadUser2.RU_away_from_RJ) imply AV.check_for_safe_gap</formula>
+			<formula>A[] ((RoadUser1.RU_crossing_RJ || RoadUser2.RU_crossing_RJ) imply (RoadJunction.is_RJ_free || RoadJunction.busy_RJ || RoadJunction.AV_should_wait || RoadJunction.AV_is_waiting || RoadJunction.check_RU))</formula>
 			<comment></comment>
 		</query>
 		<query>
-			<formula>A&lt;&gt; ((RoadUser1.RU_crossing_RJ || RoadUser2.RU_crossing_RJ) &amp;&amp; RoadJunction.busy_RJ) imply AV.waiting</formula>
+			<formula>A[] (RoadUser1.RU_crossing_RJ imply (RoadJunction.is_RJ_free || RoadJunction.busy_RJ || RoadJunction.AV_should_wait || RoadJunction.AV_is_waiting || RoadJunction.check_RU))</formula>
 			<comment></comment>
 		</query>
 		<query>
-			<formula>A&lt;&gt; (RoadUser1.RU_crossing_RJ &amp;&amp; RoadUser2.RU_crossing_RJ) imply RoadJunction.busy_RJ</formula>
+			<formula>A[] ((AV.watch_out_for_RU) imply ((RoadUser1.RU_crossing_RJ || RoadUser1.RU_away_from_RJ) || (RoadUser2.RU_crossing_RJ || RoadUser2.RU_away_from_RJ) || (RoadUser3.RU_crossing_RJ || RoadUser3.RU_away_from_RJ)))</formula>
 			<comment></comment>
 		</query>
 		<query>
-			<formula>A&lt;&gt; (RoadUser1.RU_crossing_RJ || RoadUser2.RU_crossing_RJ) imply RoadJunction.busy_RJ</formula>
+			<formula>A[] ((AV.watch_out_for_RU) imply ((RoadUser1.RU_crossing_RJ || RoadUser1.RU_away_from_RJ) || (RoadUser2.RU_crossing_RJ || RoadUser2.RU_away_from_RJ)))</formula>
 			<comment></comment>
 		</query>
 		<query>
-			<formula>A&lt;&gt; AV.AV_at_RJ imply (RoadJunction.send_stop || RoadJunction.send_stop_and_give_away)</formula>
+			<formula>A[] ((AV.watch_out_for_RU) imply (RoadUser1.RU_crossing_RJ || RoadUser1.RU_away_from_RJ))</formula>
 			<comment></comment>
 		</query>
 		<query>
-			<formula>A&lt;&gt; AV.AV_at_RJ imply RoadJunction.AV_may_enter</formula>
+			<formula>A[] ((RoadUser1.RU_crossing_RJ || RoadUser2.RU_crossing_RJ || RoadUser3.RU_crossing_RJ) imply (not AV.AV_entered_RJ))</formula>
 			<comment></comment>
 		</query>
 		<query>
-			<formula>E&lt;&gt; RoadUser1.RU_away_from_RJ imply AV.check_for_safe_gap</formula>
+			<formula>A[] ((RoadUser1.RU_crossing_RJ || RoadUser2.RU_crossing_RJ) imply (not AV.AV_entered_RJ))</formula>
 			<comment></comment>
 		</query>
 		<query>
-			<formula>A&lt;&gt; (RoadUser1.RU_crossing_RJ &amp;&amp; RoadJunction.busy_RJ) imply AV.waiting</formula>
+			<formula>A[] (RoadUser1.RU_crossing_RJ imply (not AV.AV_entered_RJ))</formula>
 			<comment></comment>
 		</query>
 		<query>
-			<formula>A&lt;&gt; RoadUser1.RU_crossing_RJ imply AV.waiting</formula>
+			<formula>A[] ((AV.AV_check_for_safe_gap) imply (AV.x &gt;= 2 &amp;&amp; AV.x &lt;= 4))</formula>
 			<comment></comment>
 		</query>
 		<query>
-			<formula>A&lt;&gt; RoadJunction.busy_RJ imply AV.waiting</formula>
+			<formula>A[] ((AV.waiting) imply (AV.x &gt;= 1 &amp;&amp; AV.x &lt;= 5))</formula>
 			<comment></comment>
 		</query>
 		<query>
-			<formula>E&lt;&gt; RoadJunction.free_RJ imply AV.AV_entered_RJ</formula>
+			<formula>A[] ((AV.watch_out_for_RU) imply (AV.x &gt;= 0 &amp;&amp; AV.x &lt;= 3))</formula>
 			<comment></comment>
 		</query>
 		<query>
-			<formula>A[] not deadlock</formula>
+			<formula>A[] (AV.AV_entered_RJ imply AV.x &gt;= 2)</formula>
+			<comment></comment>
+		</query>
+		<query>
+			<formula>A[] ((RoadJunction.send_stop || RoadJunction.send_stop_and_give_way) imply AV.AV_at_RJ)</formula>
+			<comment></comment>
+		</query>
+		<query>
+			<formula>A[] (RoadJunction.check_for_sign imply AV.AV_at_RJ)</formula>
+			<comment></comment>
+		</query>
+		<query>
+			<formula>A[] (AV.AV_check_for_safe_gap imply (RoadJunction.check_for_safe_gap || RoadJunction.there_is_safe_gap || RoadJunction.there_is_no_safe_gap))</formula>
+			<comment></comment>
+		</query>
+		<query>
+			<formula>A[] (RoadJunction.AV_may_enter imply AV.AV_entered_RJ)</formula>
+			<comment></comment>
+		</query>
+		<query>
+			<formula>E&lt;&gt; (RoadUser1.RU_away_from_RJ &amp;&amp; RoadUser2.RU_away_from_RJ &amp;&amp; RoadUser3.RU_away_from_RJ) == AV.check_for_safe_gap
+</formula>
+			<comment></comment>
+		</query>
+		<query>
+			<formula>E&lt;&gt; (RoadUser1.RU_away_from_RJ &amp;&amp; RoadUser2.RU_away_from_RJ) == AV.check_for_safe_gap
+</formula>
+			<comment></comment>
+		</query>
+		<query>
+			<formula>A&lt;&gt; (RoadUser1.RU_crossing_RJ || RoadUser2.RU_crossing_RJ || RoadUser3.RU_crossing_RJ) == AV.waiting</formula>
+			<comment></comment>
+		</query>
+		<query>
+			<formula>A&lt;&gt; (RoadUser1.RU_crossing_RJ || RoadUser2.RU_crossing_RJ || RoadUser3.RU_crossing_RJ) == RoadJunction.busy_RJ</formula>
+			<comment></comment>
+		</query>
+		<query>
+			<formula>A&lt;&gt; (RoadUser1.RU_crossing_RJ || RoadUser2.RU_crossing_RJ) == AV.waiting</formula>
+			<comment></comment>
+		</query>
+		<query>
+			<formula>A&lt;&gt; (RoadUser1.RU_crossing_RJ || RoadUser2.RU_crossing_RJ) == RoadJunction.busy_RJ</formula>
+			<comment></comment>
+		</query>
+		<query>
+			<formula>AV.x &gt;= 3 --&gt; AV.AV_entered_RJ</formula>
+			<comment></comment>
+		</query>
+		<query>
+			<formula>A&lt;&gt; AV.check_for_safe_gap == (RoadJunction.there_is_safe_gap || RoadJunction.there_is_no_safe_gap)</formula>
+			<comment></comment>
+		</query>
+		<query>
+			<formula>A&lt;&gt; RoadJunction.AV_may_enter == AV.AV_entered_RJ</formula>
+			<comment></comment>
+		</query>
+		<query>
+			<formula>A&lt;&gt; AV.AV_at_RJ == (RoadJunction.send_stop || RoadJunction.send_stop_and_give_away)</formula>
+			<comment></comment>
+		</query>
+		<query>
+			<formula>A&lt;&gt; AV.AV_at_RJ == RoadJunction.check_for_sign</formula>
+			<comment></comment>
+		</query>
+		<query>
+			<formula>E&lt;&gt; RoadUser1.RU_away_from_RJ == AV.check_for_safe_gap
+</formula>
+			<comment></comment>
+		</query>
+		<query>
+			<formula>A&lt;&gt; RoadUser1.RU_crossing_RJ == AV.waiting</formula>
+			<comment></comment>
+		</query>
+		<query>
+			<formula>A&lt;&gt; RoadUser1.RU_crossing_RJ == RoadJunction.busy_RJ</formula>
+			<comment></comment>
+		</query>
+		<query>
+			<formula>AV.AV_at_RJ --&gt; AV.watch_out_for_RU</formula>
+			<comment></comment>
+		</query>
+		<query>
+			<formula>A&lt;&gt; AV.AV_entered_RJ</formula>
+			<comment></comment>
+		</query>
+		<query>
+			<formula>E&lt;&gt; (RoadUser1.RU_away_from_RJ &amp;&amp; RoadUser2.RU_away_from_RJ &amp;&amp; RoadUser3.RU_away_from_RJ) &amp;&amp; AV.check_for_safe_gap
+</formula>
+			<comment></comment>
+		</query>
+		<query>
+			<formula>E&lt;&gt; (RoadUser1.RU_crossing_RJ || RoadUser2.RU_crossing_RJ || RoadUser3.RU_crossing_RJ) &amp;&amp; AV.waiting
+</formula>
+			<comment></comment>
+		</query>
+		<query>
+			<formula>E&lt;&gt; (RoadUser1.RU_crossing_RJ || RoadUser2.RU_crossing_RJ || RoadUser3.RU_crossing_RJ) &amp;&amp; RoadJunction.busy_RJ
+</formula>
+			<comment></comment>
+		</query>
+		<query>
+			<formula>E&lt;&gt; (RoadUser1.RU_away_from_RJ &amp;&amp; RoadUser2.RU_away_from_RJ) &amp;&amp; AV.check_for_safe_gap
+</formula>
+			<comment></comment>
+		</query>
+		<query>
+			<formula>E&lt;&gt; (RoadUser1.RU_crossing_RJ || RoadUser2.RU_crossing_RJ) &amp;&amp; AV.waiting
+</formula>
+			<comment></comment>
+		</query>
+		<query>
+			<formula>E&lt;&gt; (RoadUser1.RU_crossing_RJ || RoadUser2.RU_crossing_RJ) &amp;&amp; RoadJunction.busy_RJ
+</formula>
+			<comment></comment>
+		</query>
+		<query>
+			<formula>E&lt;&gt; RoadUser1.RU_away_from_RJ &amp;&amp; AV.check_for_safe_gap
+</formula>
+			<comment></comment>
+		</query>
+		<query>
+			<formula>E&lt;&gt; RoadUser1.RU_crossing_RJ &amp;&amp; AV.waiting</formula>
+			<comment></comment>
+		</query>
+		<query>
+			<formula>E&lt;&gt; RoadUser1.RU_crossing_RJ &amp;&amp; RoadJunction.busy_RJ</formula>
+			<comment></comment>
+		</query>
+		<query>
+			<formula>E&lt;&gt; (AV.check_for_safe_gap) &amp;&amp; (AV.x &gt;= 2 &amp;&amp; AV.x &lt;= 4)</formula>
+			<comment></comment>
+		</query>
+		<query>
+			<formula>E&lt;&gt; (AV.waiting) &amp;&amp; (AV.x &gt;= 1 &amp;&amp; AV.x &lt;= 5)</formula>
+			<comment></comment>
+		</query>
+		<query>
+			<formula>E&lt;&gt; (AV.watch_out_for_RU) &amp;&amp; (AV.x &gt;= 0 &amp;&amp; AV.x &lt;= 3)</formula>
+			<comment></comment>
+		</query>
+		<query>
+			<formula>E&lt;&gt; AV.x &gt;= 3 &amp;&amp; AV.AV_entered_RJ</formula>
+			<comment></comment>
+		</query>
+		<query>
+			<formula>E&lt;&gt; AV.AV_at_RJ &amp;&amp; (RoadJunction.send_stop || RoadJunction.send_stop_and_give_away)</formula>
+			<comment></comment>
+		</query>
+		<query>
+			<formula>E&lt;&gt; (AV.check_for_safe_gap &amp;&amp; RoadJunction.there_is_safe_gap)</formula>
+			<comment></comment>
+		</query>
+		<query>
+			<formula>E&lt;&gt; AV.AV_at_RJ &amp;&amp; RoadJunction.check_for_sign</formula>
 			<comment></comment>
 		</query>
 		<query>
@@ -392,23 +559,7 @@ system AV, RoadJunction, RoadUser1, RoadUser2, RoadUser3, SafeGap, Sign1;
 			<comment></comment>
 		</query>
 		<query>
-			<formula>A[] AV.watch_out_for_RU imply (AV.x &gt;= 0 &amp;&amp; AV.x &lt;= 3)</formula>
-			<comment></comment>
-		</query>
-		<query>
-			<formula>A[] AV.waiting imply (AV.x &gt;= 1 &amp;&amp; AV.x &lt;= 5)</formula>
-			<comment></comment>
-		</query>
-		<query>
-			<formula>A[] AV.check_for_safe_gap imply (AV.x &gt;= 2 &amp;&amp; AV.x &lt;= 4)</formula>
-			<comment></comment>
-		</query>
-		<query>
-			<formula>E[] AV.x &gt;= 3 imply AV.AV_entered_RJ  </formula>
-			<comment></comment>
-		</query>
-		<query>
-			<formula>A&lt;&gt; RoadUser1.RU_crossing_RJ imply RoadJunction.busy_RJ</formula>
+			<formula>A[] not deadlock</formula>
 			<comment></comment>
 		</query>
 	</queries>
